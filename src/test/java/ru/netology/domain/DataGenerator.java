@@ -28,13 +28,8 @@ public class DataGenerator {
         }
     }
 
-    public static String date1() {
-        String date = LocalDate.now().plusDays(3).format(ofPattern("dd.MM.yyyy"));
-        return date;
-    }
-
-    public static String date2() {
-        String date = LocalDate.now().plusDays(7).format(ofPattern("dd.MM.yyyy"));
+    public static String generateDate(int days) {
+        String date = LocalDate.now().plusDays(days).format(ofPattern("dd.MM.yyyy"));
         return date;
     }
 }
