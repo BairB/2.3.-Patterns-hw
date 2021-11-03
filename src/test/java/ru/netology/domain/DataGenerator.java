@@ -10,7 +10,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 
 public class DataGenerator {
 
-
     private DataGenerator() {
     }
 

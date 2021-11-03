@@ -27,19 +27,23 @@ public class CardDeliveryTest {
     @Test
     void shouldResheduleDate() {
         open("http://localhost:9999");
-        $(".input__control[placeholder=\"Город\"]").setValue(registrationInfo.getCity());
-        $(".input__control[placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $(".input__control[placeholder=\"Дата встречи\"]").setValue(DataGenerator.generateDate(3));
-        $(".input__control[name='name']").setValue(registrationInfo.getName());
-        $(".input__control[name='phone']").setValue(registrationInfo.getPhone().toString());
+        $("[data-test-id = 'city'] .input__control").setValue(registrationInfo.getCity());
+        $("[data-test-id = 'date'] .input__control").doubleClick().sendKeys(Keys.BACK_SPACE);
+        $("[data-test-id = 'date'] .input__control").setValue(DataGenerator.generateDate(3));
+        $("[data-test-id = 'name'] .input__control").setValue(registrationInfo.getName());
+        $("[data-test-id = 'phone'] .input__control").setValue(registrationInfo.getPhone().toString());
         $(".checkbox__box").click();
-        $$("span.button__text").find(exactText("Запланировать")).click();
+        $(".form-field .button__text").click();
+       // $$("span.button__text").find(exactText("Запланировать")).click();
         $("[data-test-id=success-notification]").shouldHave(text("Встреча успешно запланирована на " + DataGenerator.generateDate(3))).shouldBe(Condition.visible, Duration.ofSeconds(20));
-        $(".input__control[placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $(".input__control[placeholder=\"Дата встречи\"]").setValue(DataGenerator.generateDate(5));
-        $$("span.button__text").find(exactText("Запланировать")).click();
-        $(withText("Необходимо подтверждение")).shouldBe(Condition.visible, Duration.ofSeconds(20));
-        $$("span.button__text").find(exactText("Перепланировать")).click();
+        $("[data-test-id = 'date'] .input__control").doubleClick().sendKeys(Keys.BACK_SPACE);
+        $("[data-test-id = 'date'] .input__control").setValue(DataGenerator.generateDate(5));
+        $(".form-field .button__text").click();
+        //$$("span.button__text").find(exactText("Запланировать")).click();
+        $("[data-test-id=replan-notification]").shouldHave(text("Необходимо подтверждение"));
+        //$(withText("Необходимо подтверждение")).shouldBe(Condition.visible, Duration.ofSeconds(20));
+        $(".notification .button__text").click();
+        //$$("span.button__text").find(exactText("Перепланировать")).click();
         $("[data-test-id=success-notification]").shouldHave(text("Встреча успешно запланирована на " + DataGenerator.generateDate(5))).shouldBe(Condition.visible, Duration.ofSeconds(20));
     }
 }
